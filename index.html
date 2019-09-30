@@ -1,1 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Password Generator</title>
+  </head>
+  <body>
+      <header>
+          <h1>Password Generator</h1>
+        </header>
+        <h2>Generate a Password</h2>
+        <textarea
+          readonly
+          id="password"
+          placeholder="Your Secure Password"
+        ></textarea>
+        <button id="generate">Generate Password</button>
+        <button id="copy">
+          Copy to Clipboard
+        </button>
+    <script>
+        var charUpper= ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        var charLower= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+        var charNum= ['1','2','3','4','5','6','7','8','9','0'];
+        var charSpec= ['!','@','#','$','%','^','&','*','(',')','?','<','>']; 
+        var isUpper= confirm('Would you like uppercase characters in your password?');
+        var isLower= confirm('Would you like lowercase characters in your password?');
+        var isNum= confirm('Would you like numbers in your password?');
+        var isSpec= confirm('Would you like special characters in your password?');
+        var passwordLength= prompt('How long do you want your password? (Must be between 8 and 128 characters)');
+        var chars =[];
+        var charGroup= [charUpper, charLower, charNum, charSpec];
+     
+        var passWord= [];
 
+        function checkLength() {
+          if (passwordLength >= 8 && passwordLength <= 128 && (isUpper === true || isLower === true || isNum === true || isSpec === true)){
+              alert("Click generate to get your password");
+          }
+          else{ 
+              alert("Password must be between 8 and 128 characters");
+              isUpper= confirm('Would you like uppercase characters in your password?');
+              isLower= confirm('Would you like lowercase characters in your password?');
+              isNum= confirm('Would you like numbers in your password?');
+              isSpec= confirm('Would you like special characters in your password?');
+              passwordLength= prompt('How long do you want your password? (Must be between 8 and 128 characters)');
+              checkLength();
+          }
+          return[isUpper, isLower, isNum, isSpec];
+        }
+
+      function getChars(){
+        var isChars= [isUpper, isLower, isNum, isSpec];
+        for (var i=0; i< isChars.length; i++){
+          console.log(isChars[i]);
+          if (isChars[i] === true){
+            chars = chars.concat(charGroup[i]);
+            console.log(charGroup[i])
+            console.log(chars);
+          }
+          else { 
+            console.log('this is else');
+          }
+        }
+      }
+
+      function getPassString (){
+        for (var i=0; i< passwordLength; i++){
+          passWord.push(chars[Math.floor(Math.random()*chars.length)]);
+        }
+        passWord = passWord.join('');
+        console.log(passWord);
+      }
+      checkLength();
+      getChars();
+      getPassString();
+      console.log(passWord);
+
+      generate.addEventListener("click", function() {
+       document.getElementById('password').placeholder= passWord;
+});
+
+
+  </script>
+  </body>
+</html>
